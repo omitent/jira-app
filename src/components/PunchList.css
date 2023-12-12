@@ -1,0 +1,26 @@
+.item-priority {
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+}
+
+.badge {
+  background-color: #dee9fd;
+  color: #0e49a1 !important;
+  padding: 4px 8px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-32 {
+  width: 32%;
+}
