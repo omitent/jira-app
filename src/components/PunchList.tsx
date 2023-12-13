@@ -10,6 +10,12 @@ import highSvg from "./icons/high.svg";
 // import AppCover from "home/dashboad/AppCover";
 import AppCover from "./AppCover";
 
+const priorityLabels = {
+  0: "low",
+  1: "medium",
+  2: "high",
+};
+
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
@@ -61,6 +67,7 @@ interface Ticket {
 
 export default function PunchList() {
   const [columns, setColumns] = useState<{ name: string; items: Ticket[] }[]>();
+  const [prioritySortOrder, setPrioritySortOrder] = useState(0);
 
   useEffect(() => {
     const tickets = Api.getJiraTickets();
@@ -80,6 +87,38 @@ export default function PunchList() {
 
     setColumns(ticketsByUser);
   }, []);
+
+  const sortByPriority = (name: string, prioritySortOrder: number) => {
+    if (columns) {
+      let updatedItems: Ticket[] | undefined = [];
+      if (prioritySortOrder === 0) {
+        setPrioritySortOrder(1);
+        updatedItems = Object.entries(columns)
+          .find((column) => column[1].name === name)?.[1]
+          .items.sort(
+            (item1, item2) => Number(item2.priority) - Number(item1.priority)
+          );
+      } else if (prioritySortOrder === 1) {
+        setPrioritySortOrder(2);
+        updatedItems = Object.entries(columns)
+          .find((column) => column[1].name === name)?.[1]
+          .items.sort(
+            (item1, item2) => Number(item1.priority) - Number(item2.priority)
+          );
+      } else if (prioritySortOrder === 2) {
+        setPrioritySortOrder(1);
+        updatedItems = Object.entries(columns)
+          .find((column) => column[1].name === name)?.[1]
+          .items.sort(
+            (item1, item2) => Number(item2.priority) - Number(item1.priority)
+          );
+      }
+      const updatedColumn = { name, items: updatedItems };
+      let updatedColumns = columns;
+      updatedColumns[name] = updatedColumn;
+      setColumns({ ...updatedColumns });
+    }
+  };
 
   return (
     <AppCover>
@@ -111,10 +150,41 @@ export default function PunchList() {
                               className="min-height-500 m-1 text-primary"
                             >
                               <div className="d-flex text-secondary p-2 border-bottom border-grey align-items-center">
-                                <div className="w-10">P</div>
-                                <div className="w-20">Key</div>
-                                <div className="w-50">Summary</div>
-                                <div className="w-20">Status</div>
+                                <div
+                                  className="w-10"
+                                  onClick={() => {
+                                    sortByPriority(
+                                      column.name,
+                                      prioritySortOrder
+                                    );
+                                  }}
+                                >
+                                  P
+                                  {prioritySortOrder === 1 && (
+                                    <span>&#8593;</span>
+                                  )}
+                                  {prioritySortOrder === 2 && (
+                                    <span>&#8595;</span>
+                                  )}
+                                </div>
+                                <div
+                                  className="w-20"
+                                  // onClick={sortByKey(columnId)}
+                                >
+                                  Key
+                                </div>
+                                <div
+                                  className="w-50"
+                                  // onClick={sortBySummary(columnId)}
+                                >
+                                  Summary
+                                </div>
+                                <div
+                                  className="w-20"
+                                  // onClick={sortByStatus(columnId)}
+                                >
+                                  Status
+                                </div>
                               </div>
                               {column.items.map((item, index) => {
                                 return (
@@ -132,21 +202,21 @@ export default function PunchList() {
                                           {...provided.dragHandleProps}
                                         >
                                           <div className="w-10">
-                                            {item.priority === "low" && (
+                                            {Number(item.priority) === 0 && (
                                               <img
                                                 src={lowSvg}
                                                 className="item-priority"
                                                 alt="low"
                                               />
                                             )}
-                                            {item.priority === "high" && (
+                                            {Number(item.priority) === 2 && (
                                               <img
                                                 src={highSvg}
                                                 className="item-priority"
                                                 alt="high"
                                               />
                                             )}
-                                            {item.priority === "medium" && (
+                                            {Number(item.priority) === 1 && (
                                               <img
                                                 src={mediumSvg}
                                                 className="item-priority"
@@ -162,7 +232,9 @@ export default function PunchList() {
                                           </div>
                                           <div className="w-20">
                                             <p className="badge">
-                                              <b>{item.priority}</b>
+                                              <b>
+                                                {priorityLabels[item.priority]}
+                                              </b>
                                             </p>
                                           </div>
                                         </div>
