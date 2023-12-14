@@ -103,12 +103,12 @@ export default function PunchList() {
             sortStatus[username] === undefined ||
             sortStatus[username][field] === undefined
           ) {
-            return val2.localeCompare(val1);
-          }
-          if (sortStatus[username][field]) {
             return val1.localeCompare(val2);
           }
-          return val2.localeCompare(val1);
+          if (sortStatus[username][field]) {
+            return val2.localeCompare(val1);
+          }
+          return val1.localeCompare(val2);
         });
       const updatedColumn = { name: username, items: updatedItems };
       let updatedColumns = columns;
