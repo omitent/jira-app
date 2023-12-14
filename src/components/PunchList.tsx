@@ -111,9 +111,9 @@ export default function PunchList() {
             return val2.localeCompare(val1);
           }
           if (sortStatus[username][field]) {
-            return val2.localeCompare(val1);
+            return val1.localeCompare(val2);
           }
-          return val1.localeCompare(val2);
+          return val2.localeCompare(val1);
         });
       const updatedColumn = { name: username, items: updatedItems };
       let updatedColumns = columns;
