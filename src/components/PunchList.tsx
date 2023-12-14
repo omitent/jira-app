@@ -58,6 +58,14 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
+interface SortStatus {
+  [Username: string]: UserSort;
+}
+
+interface UserSort {
+  [field: string]: boolean;
+}
+
 interface Ticket {
   id: string;
   content: string;
@@ -67,7 +75,7 @@ interface Ticket {
 
 export default function PunchList() {
   const [columns, setColumns] = useState<{ name: string; items: Ticket[] }[]>();
-  const [prioritySortOrder, setPrioritySortOrder] = useState(0);
+  const [sortStatus, setSortStatus] = useState<SortStatus>({});
 
   useEffect(() => {
     const tickets = Api.getJiraTickets();
@@ -88,34 +96,28 @@ export default function PunchList() {
     setColumns(ticketsByUser);
   }, []);
 
-  const sortByPriority = (name: string, prioritySortOrder: number) => {
+  const sortByField = (username: string, field: string) => {
     if (columns) {
-      let updatedItems: Ticket[] | undefined = [];
-      if (prioritySortOrder === 0) {
-        setPrioritySortOrder(1);
-        updatedItems = Object.entries(columns)
-          .find((column) => column[1].name === name)?.[1]
-          .items.sort(
-            (item1, item2) => Number(item2.priority) - Number(item1.priority)
-          );
-      } else if (prioritySortOrder === 1) {
-        setPrioritySortOrder(2);
-        updatedItems = Object.entries(columns)
-          .find((column) => column[1].name === name)?.[1]
-          .items.sort(
-            (item1, item2) => Number(item1.priority) - Number(item2.priority)
-          );
-      } else if (prioritySortOrder === 2) {
-        setPrioritySortOrder(1);
-        updatedItems = Object.entries(columns)
-          .find((column) => column[1].name === name)?.[1]
-          .items.sort(
-            (item1, item2) => Number(item2.priority) - Number(item1.priority)
-          );
-      }
-      const updatedColumn = { name, items: updatedItems };
+      let updatedItems = Object.entries(columns)
+        .find((column) => column[1].name === username)?.[1]
+        .items.sort((item1, item2) => {
+          let val1 = item1[field],
+            val2 = item2[field];
+          console.log(val1.toString().localCompare(val2.toString()));
+          if (
+            sortStatus[username] === undefined ||
+            sortStatus[username][field] === undefined
+          ) {
+            return val2 - val1;
+          }
+          if (sortStatus[username][field]) {
+            return val2 - val1;
+          }
+          return val1 - val2;
+        });
+      const updatedColumn = { name: username, items: updatedItems };
       let updatedColumns = columns;
-      updatedColumns[name] = updatedColumn;
+      updatedColumns[username] = updatedColumn;
       setColumns({ ...updatedColumns });
     }
   };
@@ -153,32 +155,91 @@ export default function PunchList() {
                                 <div
                                   className="w-10"
                                   onClick={() => {
-                                    sortByPriority(
-                                      column.name,
-                                      prioritySortOrder
-                                    );
+                                    if (sortStatus[column.name] === undefined) {
+                                      setSortStatus({
+                                        ...sortStatus,
+                                        [column.name]: {
+                                          priority: true,
+                                        },
+                                      });
+                                    } else {
+                                      if (
+                                        sortStatus[column.name]["priority"] ===
+                                        undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            priority: true,
+                                          },
+                                        });
+                                      } else {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            priority:
+                                              !sortStatus[column.name][
+                                                "priority"
+                                              ],
+                                          },
+                                        });
+                                      }
+                                    }
+                                    sortByField(column.name, "priority");
                                   }}
                                 >
                                   P
-                                  {prioritySortOrder === 1 && (
-                                    <span>&#8593;</span>
-                                  )}
-                                  {prioritySortOrder === 2 && (
-                                    <span>&#8595;</span>
-                                  )}
+                                  {sortStatus[column.name] &&
+                                    sortStatus[column.name]["priority"] !==
+                                      undefined && (
+                                      <>
+                                        {sortStatus[column.name]["priority"] ===
+                                          true && <span>&#8593;</span>}
+                                        {sortStatus[column.name]["priority"] ===
+                                          false && <span>&#8595;</span>}
+                                      </>
+                                    )}
                                 </div>
                                 <div
                                   className="w-20"
-                                  // onClick={sortByKey(columnId)}
+                                  onClick={() => {
+                                    if (sortStatus[column.name] === undefined) {
+                                      setSortStatus({
+                                        ...sortStatus,
+                                        [column.name]: {
+                                          ticketNumber: true,
+                                        },
+                                      });
+                                    } else {
+                                      if (
+                                        sortStatus[column.name][
+                                          "ticketNumber"
+                                        ] === undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            ticketNumber: true,
+                                          },
+                                        });
+                                      } else {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            ticketNumber:
+                                              !sortStatus[column.name][
+                                                "ticketNumber"
+                                              ],
+                                          },
+                                        });
+                                      }
+                                    }
+                                    sortByField(column.name, "ticketNumber");
+                                  }}
                                 >
                                   Key
                                 </div>
-                                <div
-                                  className="w-50"
-                                  // onClick={sortBySummary(columnId)}
-                                >
-                                  Summary
-                                </div>
+                                <div className="w-50">Summary</div>
                                 <div
                                   className="w-20"
                                   // onClick={sortByStatus(columnId)}
