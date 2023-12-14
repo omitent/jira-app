@@ -101,19 +101,19 @@ export default function PunchList() {
       let updatedItems = Object.entries(columns)
         .find((column) => column[1].name === username)?.[1]
         .items.sort((item1, item2) => {
-          let val1 = item1[field],
-            val2 = item2[field];
-          console.log(val1.toString().localCompare(val2.toString()));
+          let val1 = item1[field].toString(),
+            val2 = item2[field].toString();
+
           if (
             sortStatus[username] === undefined ||
             sortStatus[username][field] === undefined
           ) {
-            return val2 - val1;
+            return val2.localeCompare(val1);
           }
           if (sortStatus[username][field]) {
-            return val2 - val1;
+            return val2.localeCompare(val1);
           }
-          return val1 - val2;
+          return val1.localeCompare(val2);
         });
       const updatedColumn = { name: username, items: updatedItems };
       let updatedColumns = columns;
@@ -238,13 +238,114 @@ export default function PunchList() {
                                   }}
                                 >
                                   Key
+                                  {sortStatus[column.name] &&
+                                    sortStatus[column.name]["ticketNumber"] !==
+                                      undefined && (
+                                      <>
+                                        {sortStatus[column.name][
+                                          "ticketNumber"
+                                        ] === true && <span>&#8593;</span>}
+                                        {sortStatus[column.name][
+                                          "ticketNumber"
+                                        ] === false && <span>&#8595;</span>}
+                                      </>
+                                    )}
                                 </div>
-                                <div className="w-50">Summary</div>
+                                <div
+                                  className="w-50"
+                                  onClick={() => {
+                                    if (sortStatus[column.name] === undefined) {
+                                      setSortStatus({
+                                        ...sortStatus,
+                                        [column.name]: {
+                                          content: true,
+                                        },
+                                      });
+                                    } else {
+                                      if (
+                                        sortStatus[column.name]["content"] ===
+                                        undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            content: true,
+                                          },
+                                        });
+                                      } else {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            content:
+                                              !sortStatus[column.name][
+                                                "content"
+                                              ],
+                                          },
+                                        });
+                                      }
+                                    }
+                                    sortByField(column.name, "content");
+                                  }}
+                                >
+                                  Summary
+                                  {sortStatus[column.name] &&
+                                    sortStatus[column.name]["content"] !==
+                                      undefined && (
+                                      <>
+                                        {sortStatus[column.name]["content"] ===
+                                          true && <span>&#8593;</span>}
+                                        {sortStatus[column.name]["content"] ===
+                                          false && <span>&#8595;</span>}
+                                      </>
+                                    )}
+                                </div>
                                 <div
                                   className="w-20"
-                                  // onClick={sortByStatus(columnId)}
+                                  onClick={() => {
+                                    if (sortStatus[column.name] === undefined) {
+                                      setSortStatus({
+                                        ...sortStatus,
+                                        [column.name]: {
+                                          priority: true,
+                                        },
+                                      });
+                                    } else {
+                                      if (
+                                        sortStatus[column.name]["priority"] ===
+                                        undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            priority: true,
+                                          },
+                                        });
+                                      } else {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            priority:
+                                              !sortStatus[column.name][
+                                                "priority"
+                                              ],
+                                          },
+                                        });
+                                      }
+                                    }
+                                    sortByField(column.name, "priority");
+                                  }}
                                 >
                                   Status
+                                  {sortStatus[column.name] &&
+                                    sortStatus[column.name]["priority"] !==
+                                      undefined && (
+                                      <>
+                                        {sortStatus[column.name]["priority"] ===
+                                          true && <span>&#8593;</span>}
+                                        {sortStatus[column.name]["priority"] ===
+                                          false && <span>&#8595;</span>}
+                                      </>
+                                    )}
                                 </div>
                               </div>
                               {column.items.map((item, index) => {
