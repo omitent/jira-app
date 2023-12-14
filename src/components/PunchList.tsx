@@ -78,11 +78,15 @@ export default function PunchList() {
   }, []);
 
   const sortByField = (columnName: string, field: string) => {
-    if (columns.length === 0) return;
+    if (!columns) return;
 
-    const columnIndex = columns?.findIndex(
-      (column) => column.name === columnName
-    );
+    let columnIndex = -1;
+
+    let columnEntries = Object.entries(columns);
+
+    columnEntries.forEach((column, index) => {
+      if (column[1].name === columnName) columnIndex = index;
+    });
     if (columnIndex === -1) return;
 
     const sortedItems = [...columns[columnIndex].items].sort((item1, item2) => {
@@ -94,14 +98,15 @@ export default function PunchList() {
     });
 
     setColumns(
-      columns.map((column, index) => {
+      columnEntries.map((column, index) => {
+        console.log(column);
         if (index === columnIndex) {
           return {
-            ...column,
+            ...column[1],
             items: sortedItems,
           };
         }
-        return column;
+        return column[1];
       })
     );
   };
