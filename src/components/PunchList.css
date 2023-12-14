@@ -28,3 +28,7 @@
 .ticket-header {
   cursor: move;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
