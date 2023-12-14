@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import ReactGridLayout from "react-grid-layout";
 
 // import Api from "../../../utils/api";
 import Api from "../api/api";
@@ -86,101 +87,126 @@ export default function PunchList() {
       <div className="d-flex flex-wrap">
         {columns && Object.entries(columns).length ? (
           <DragDropContext
-            onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+            onDragEnd={(result) => {
+              onDragEnd(result, columns, setColumns);
+            }}
           >
-            {Object.entries(columns).map(
-              ([columnId, column]: [
-                string,
-                { name: string; items: Ticket[] }
-              ]) => {
-                return (
-                  <div
-                    className="d-flex border align-items-center flex-column w-32 m-2"
-                    key={columnId}
-                  >
-                    <div className="bg-light w-100 p-2">
-                      <b>{column.name}</b>
-                    </div>
-                    <div className="h-600 overflow-y-auto overflow-x-hidden">
-                      <Droppable droppableId={columnId} key={columnId}>
-                        {(provided) => {
-                          return (
-                            <div
-                              {...provided.droppableProps}
-                              ref={provided.innerRef}
-                              className="min-height-500 m-1 text-primary"
-                            >
-                              <div className="d-flex text-secondary p-2 border-bottom border-grey align-items-center">
-                                <div className="w-10">P</div>
-                                <div className="w-20">Key</div>
-                                <div className="w-50">Summary</div>
-                                <div className="w-20">Status</div>
+            <ReactGridLayout
+              className="layout"
+              cols={12}
+              rowHeight={50}
+              draggableHandle=".ticket-header"
+              width={window.innerWidth - 100}
+            >
+              {Object.entries(columns).map(
+                (
+                  [columnId, column]: [
+                    string,
+                    { name: string; items: Ticket[] }
+                  ],
+                  index
+                ) => {
+                  return (
+                    <div
+                      className="d-flex border align-items-center flex-column w-32 m-2"
+                      key={columnId}
+                      data-grid={{
+                        x: (index * 4) % 12,
+                        y: 0,
+                        w: 4,
+                        h: 9,
+                      }}
+                    >
+                      <div className="bg-light w-100 p-2 ticket-header">
+                        <b>{column.name}</b>
+                      </div>
+                      <div className="h-600 overflow-y-auto overflow-x-hidden">
+                        <Droppable droppableId={columnId} key={columnId}>
+                          {(provided) => {
+                            return (
+                              <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                className="min-height-500 m-1 text-primary"
+                              >
+                                {column.items.length > 0 ? (
+                                  <div className="d-flex text-secondary p-2 border-bottom border-grey align-items-center">
+                                    <div className="w-10">P</div>
+                                    <div className="w-20">Key</div>
+                                    <div className="w-50">Summary</div>
+                                    <div className="w-20">Status</div>
+                                  </div>
+                                ) : (
+                                  <p className="mt-3">
+                                    There is no ticket for {column.name}.
+                                  </p>
+                                )}
+                                {column.items.map((item, index) => {
+                                  return (
+                                    <Draggable
+                                      key={item.id}
+                                      draggableId={item.id}
+                                      index={index}
+                                    >
+                                      {(provided) => {
+                                        return (
+                                          <div
+                                            className="p-1 border-bottom d-flex align-items-center ticket-card"
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                          >
+                                            <div className="w-10">
+                                              {item.priority === "low" && (
+                                                <img
+                                                  src={lowSvg}
+                                                  className="item-priority"
+                                                  alt="low"
+                                                />
+                                              )}
+                                              {item.priority === "high" && (
+                                                <img
+                                                  src={highSvg}
+                                                  className="item-priority"
+                                                  alt="high"
+                                                />
+                                              )}
+                                              {item.priority === "medium" && (
+                                                <img
+                                                  src={mediumSvg}
+                                                  className="item-priority"
+                                                  alt="medium"
+                                                />
+                                              )}
+                                            </div>
+                                            <div className="w-20">
+                                              {item.ticketNumber}
+                                            </div>
+                                            <div className="w-50">
+                                              {item.content}
+                                            </div>
+                                            <div className="w-20">
+                                              <p className="badge">
+                                                <b>{item.priority}</b>
+                                              </p>
+                                            </div>
+                                          </div>
+                                        );
+                                      }}
+                                    </Draggable>
+                                  );
+                                })}
+                                {provided.placeholder}
                               </div>
-                              {column.items.map((item, index) => {
-                                return (
-                                  <Draggable
-                                    key={item.id}
-                                    draggableId={item.id}
-                                    index={index}
-                                  >
-                                    {(provided) => {
-                                      return (
-                                        <div
-                                          className="p-1 border-bottom d-flex align-items-center"
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                        >
-                                          <div className="w-10">
-                                            {item.priority === "low" && (
-                                              <img
-                                                src={lowSvg}
-                                                className="item-priority"
-                                                alt="low"
-                                              />
-                                            )}
-                                            {item.priority === "high" && (
-                                              <img
-                                                src={highSvg}
-                                                className="item-priority"
-                                                alt="high"
-                                              />
-                                            )}
-                                            {item.priority === "medium" && (
-                                              <img
-                                                src={mediumSvg}
-                                                className="item-priority"
-                                                alt="medium"
-                                              />
-                                            )}
-                                          </div>
-                                          <div className="w-20">
-                                            {item.ticketNumber}
-                                          </div>
-                                          <div className="w-50">
-                                            {item.content}
-                                          </div>
-                                          <div className="w-20">
-                                            <p className="badge">
-                                              <b>{item.priority}</b>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      );
-                                    }}
-                                  </Draggable>
-                                );
-                              })}
-                              {provided.placeholder}
-                            </div>
-                          );
-                        }}
-                      </Droppable>
+                            );
+                          }}
+                        </Droppable>
+                      </div>
                     </div>
-                  </div>
-                );
-              }
-            )}
+                  );
+                }
+              )}
+            </ReactGridLayout>
           </DragDropContext>
         ) : (
           <h1>Loading...</h1>

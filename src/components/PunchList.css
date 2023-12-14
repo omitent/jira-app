@@ -24,3 +24,7 @@
 .w-32 {
   width: 32%;
 }
+
+.ticket-header {
+  cursor: move;
+}
