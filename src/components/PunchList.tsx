@@ -82,7 +82,7 @@ export default function PunchList() {
 
     let columnIndex = -1;
 
-    let columnEntries = Object.entries(columns);
+    const columnEntries = Object.entries(columns);
 
     columnEntries.forEach((column, index) => {
       if (column[1].name === columnName) columnIndex = index;
