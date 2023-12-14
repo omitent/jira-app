@@ -53,15 +53,25 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
+interface SortStatus {
+  [Username: string]: UserSort;
+}
+
+interface UserSort {
+  [field: string]: boolean;
+}
+
 interface Ticket {
   id: string;
   content: string;
   priority: string;
   ticketNumber: string;
+  status: string;
 }
 
 export default function PunchList() {
   const [columns, setColumns] = useState<{ name: string; items: Ticket[] }[]>();
+  const [sortStatus, setSortStatus] = useState<SortStatus>({});
 
   useEffect(() => {
     const tickets = Api.getJiraTickets();
@@ -81,6 +91,32 @@ export default function PunchList() {
 
     setColumns(ticketsByUser);
   }, []);
+
+  const sortByField = (username: string, field: string) => {
+    if (columns) {
+      let updatedItems = Object.entries(columns)
+        .find((column) => column[1].name === username)?.[1]
+        .items.sort((item1, item2) => {
+          let val1 = item1[field].toString(),
+            val2 = item2[field].toString();
+
+          if (
+            sortStatus[username] === undefined ||
+            sortStatus[username][field] === undefined
+          ) {
+            return val1.localeCompare(val2);
+          }
+          if (sortStatus[username][field]) {
+            return val2.localeCompare(val1);
+          }
+          return val1.localeCompare(val2);
+        });
+      const updatedColumn = { name: username, items: updatedItems };
+      let updatedColumns = columns;
+      updatedColumns[username] = updatedColumn;
+      setColumns({ ...updatedColumns });
+    }
+  };
 
   return (
     <AppCover>
@@ -129,18 +165,217 @@ export default function PunchList() {
                                 ref={provided.innerRef}
                                 className="min-height-500 m-1 text-primary"
                               >
-                                {column.items.length > 0 ? (
-                                  <div className="d-flex text-secondary p-2 border-bottom border-grey align-items-center">
-                                    <div className="w-10">P</div>
-                                    <div className="w-20">Key</div>
-                                    <div className="w-50">Summary</div>
-                                    <div className="w-20">Status</div>
+                                <div className="d-flex text-secondary p-2 border-bottom border-grey align-items-center">
+                                  <div
+                                    className="w-10"
+                                    onClick={() => {
+                                      if (
+                                        sortStatus[column.name] === undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            priority: true,
+                                          },
+                                        });
+                                      } else {
+                                        if (
+                                          sortStatus[column.name][
+                                            "priority"
+                                          ] === undefined
+                                        ) {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              priority: true,
+                                            },
+                                          });
+                                        } else {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              priority:
+                                                !sortStatus[column.name][
+                                                  "priority"
+                                                ],
+                                            },
+                                          });
+                                        }
+                                      }
+                                      sortByField(column.name, "priority");
+                                    }}
+                                  >
+                                    P
+                                    {sortStatus[column.name] &&
+                                      sortStatus[column.name]["priority"] !==
+                                        undefined && (
+                                        <>
+                                          {sortStatus[column.name][
+                                            "priority"
+                                          ] === true && <span>&#8593;</span>}
+                                          {sortStatus[column.name][
+                                            "priority"
+                                          ] === false && <span>&#8595;</span>}
+                                        </>
+                                      )}
                                   </div>
-                                ) : (
-                                  <p className="mt-3">
-                                    There is no ticket for {column.name}.
-                                  </p>
-                                )}
+                                  <div
+                                    className="w-20"
+                                    onClick={() => {
+                                      if (
+                                        sortStatus[column.name] === undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            ticketNumber: true,
+                                          },
+                                        });
+                                      } else {
+                                        if (
+                                          sortStatus[column.name][
+                                            "ticketNumber"
+                                          ] === undefined
+                                        ) {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              ticketNumber: true,
+                                            },
+                                          });
+                                        } else {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              ticketNumber:
+                                                !sortStatus[column.name][
+                                                  "ticketNumber"
+                                                ],
+                                            },
+                                          });
+                                        }
+                                      }
+                                      sortByField(column.name, "ticketNumber");
+                                    }}
+                                  >
+                                    Key
+                                    {sortStatus[column.name] &&
+                                      sortStatus[column.name][
+                                        "ticketNumber"
+                                      ] !== undefined && (
+                                        <>
+                                          {sortStatus[column.name][
+                                            "ticketNumber"
+                                          ] === true && <span>&#8593;</span>}
+                                          {sortStatus[column.name][
+                                            "ticketNumber"
+                                          ] === false && <span>&#8595;</span>}
+                                        </>
+                                      )}
+                                  </div>
+                                  <div
+                                    className="w-50"
+                                    onClick={() => {
+                                      if (
+                                        sortStatus[column.name] === undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            content: true,
+                                          },
+                                        });
+                                      } else {
+                                        if (
+                                          sortStatus[column.name]["content"] ===
+                                          undefined
+                                        ) {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              content: true,
+                                            },
+                                          });
+                                        } else {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              content:
+                                                !sortStatus[column.name][
+                                                  "content"
+                                                ],
+                                            },
+                                          });
+                                        }
+                                      }
+                                      sortByField(column.name, "content");
+                                    }}
+                                  >
+                                    Summary
+                                    {sortStatus[column.name] &&
+                                      sortStatus[column.name]["content"] !==
+                                        undefined && (
+                                        <>
+                                          {sortStatus[column.name][
+                                            "content"
+                                          ] === true && <span>&#8593;</span>}
+                                          {sortStatus[column.name][
+                                            "content"
+                                          ] === false && <span>&#8595;</span>}
+                                        </>
+                                      )}
+                                  </div>
+                                  <div
+                                    className="w-20"
+                                    onClick={() => {
+                                      if (
+                                        sortStatus[column.name] === undefined
+                                      ) {
+                                        setSortStatus({
+                                          ...sortStatus,
+                                          [column.name]: {
+                                            status: true,
+                                          },
+                                        });
+                                      } else {
+                                        if (
+                                          sortStatus[column.name]["status"] ===
+                                          undefined
+                                        ) {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              status: true,
+                                            },
+                                          });
+                                        } else {
+                                          setSortStatus({
+                                            ...sortStatus,
+                                            [column.name]: {
+                                              status:
+                                                !sortStatus[column.name][
+                                                  "status"
+                                                ],
+                                            },
+                                          });
+                                        }
+                                      }
+                                      sortByField(column.name, "status");
+                                    }}
+                                  >
+                                    Status
+                                    {sortStatus[column.name] &&
+                                      sortStatus[column.name]["status"] !==
+                                        undefined && (
+                                        <>
+                                          {sortStatus[column.name]["status"] ===
+                                            true && <span>&#8593;</span>}
+                                          {sortStatus[column.name]["status"] ===
+                                            false && <span>&#8595;</span>}
+                                        </>
+                                      )}
+                                  </div>
+                                </div>
                                 {column.items.map((item, index) => {
                                   return (
                                     <Draggable
@@ -151,27 +386,27 @@ export default function PunchList() {
                                       {(provided) => {
                                         return (
                                           <div
-                                            className="p-1 border-bottom d-flex align-items-center ticket-card"
+                                            className="p-1 border-bottom d-flex align-items-center"
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
                                           >
                                             <div className="w-10">
-                                              {item.priority === "low" && (
+                                              {Number(item.priority) === 0 && (
                                                 <img
                                                   src={lowSvg}
                                                   className="item-priority"
                                                   alt="low"
                                                 />
                                               )}
-                                              {item.priority === "high" && (
+                                              {Number(item.priority) === 2 && (
                                                 <img
                                                   src={highSvg}
                                                   className="item-priority"
                                                   alt="high"
                                                 />
                                               )}
-                                              {item.priority === "medium" && (
+                                              {Number(item.priority) === 1 && (
                                                 <img
                                                   src={mediumSvg}
                                                   className="item-priority"
@@ -187,7 +422,7 @@ export default function PunchList() {
                                             </div>
                                             <div className="w-20">
                                               <p className="badge">
-                                                <b>{item.priority}</b>
+                                                <b>{item.status}</b>
                                               </p>
                                             </div>
                                           </div>

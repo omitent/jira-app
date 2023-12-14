@@ -6,7 +6,8 @@ export default class Api {
         ticketNumber: "MI-100",
         content:
           "Cart featureLorem ipsum dolor sit amet, consectetur adipiscing elits.",
-        priority: "medium",
+        priority: 1,
+        status: "Backlog",
         owner: { name: "John" },
       },
       {
@@ -14,7 +15,8 @@ export default class Api {
         ticketNumber: "MI-101",
         content:
           "Take ownership of the entire software development lifecycle, from concept to deployment.",
-        priority: "high",
+        priority: 2,
+        status: "In Progress",
         owner: { name: "Mike" },
       },
       {
@@ -22,7 +24,8 @@ export default class Api {
         ticketNumber: "MI-102",
         content:
           "Design and implement robust, scalable, and efficient AI software architecture tailored to our business needs.",
-        priority: "high",
+        priority: 2,
+        status: "Closed",
         owner: { name: "Mike" },
       },
       {
@@ -30,7 +33,8 @@ export default class Api {
         ticketNumber: "MI-103",
         content:
           "Develop user-friendly and responsive frontend interfaces, ensuring a seamless user experience.",
-        priority: "low",
+        priority: 0,
+        status: "In Progress",
         owner: { name: "John" },
       },
       {
@@ -38,7 +42,8 @@ export default class Api {
         ticketNumber: "MI-104",
         content:
           "Ability to design and optimize algorithms for efficiency and scalability.",
-        priority: "medium",
+        priority: 1,
+        status: "Backlog",
         owner: { name: "Doe" },
       },
       {
@@ -46,7 +51,8 @@ export default class Api {
         ticketNumber: "MI-105",
         content:
           "Implement security best practices to safeguard user data and ensure the integrity of the software.",
-        priority: "medium",
+        priority: 1,
+        status: "Closed",
         owner: { name: "Ashley" },
       },
       {
@@ -54,7 +60,8 @@ export default class Api {
         ticketNumber: "MI-106",
         content:
           "Conduct thorough testing of the software to identify and fix bugs, ensuring a stable and reliable product.",
-        priority: "medium",
+        priority: 1,
+        status: "In Progress",
         owner: { name: "Matthew" },
       },
       {
@@ -62,7 +69,8 @@ export default class Api {
         ticketNumber: "MI-107",
         content:
           "Strong background in AI and machine learning, with experience in implementing and integrating models into software.",
-        priority: "low",
+        priority: 0,
+        status: "Backlog",
         owner: { name: "John" },
       },
       {
@@ -70,7 +78,8 @@ export default class Api {
         ticketNumber: "MI-108",
         content:
           "We pride ourselves in our commitment to providing the highest quality of service, while helping our clients meet their goals.",
-        priority: "medium",
+        priority: 1,
+        status: "Closed",
         owner: { name: "Ashley" },
       },
       {
@@ -78,7 +87,8 @@ export default class Api {
         ticketNumber: "MI-109",
         content:
           "We are currently seeking a skilled and motivated Full Stack Web Developer to join our team.",
-        priority: "low",
+        priority: 0,
+        status: "In Progress",
         owner: { name: "Matthew" },
       },
       {
@@ -86,7 +96,8 @@ export default class Api {
         ticketNumber: "MI-111",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "high",
+        priority: 2,
+        status: "Testing",
         owner: { name: "Mike" },
       },
       {
@@ -94,7 +105,8 @@ export default class Api {
         ticketNumber: "MI-112",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "low",
+        priority: 0,
+        status: "In Progress",
         owner: { name: "Doe" },
       },
       {
@@ -102,7 +114,8 @@ export default class Api {
         ticketNumber: "MI-113",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "medium",
+        priority: 1,
+        status: "Backlog",
         owner: { name: "John" },
       },
       {
@@ -110,7 +123,8 @@ export default class Api {
         ticketNumber: "MI-114",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "high",
+        priority: 2,
+        status: "In Progress",
         owner: { name: "Doe" },
       },
       {
@@ -118,7 +132,8 @@ export default class Api {
         ticketNumber: "MI-115",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "low",
+        priority: 0,
+        status: "Backlog",
         owner: { name: "Mike" },
       },
       {
@@ -126,7 +141,8 @@ export default class Api {
         ticketNumber: "MI-116",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "high",
+        priority: 2,
+        status: "Testing",
         owner: { name: "Doe" },
       },
       {
@@ -134,7 +150,8 @@ export default class Api {
         ticketNumber: "MI-117",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "medium",
+        priority: 1,
+        status: "In Progress",
         owner: { name: "Mike" },
       },
       {
@@ -142,7 +159,8 @@ export default class Api {
         ticketNumber: "MI-118",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "high",
+        priority: 2,
+        status: "In Progress",
         owner: { name: "Ashley" },
       },
       {
@@ -150,7 +168,8 @@ export default class Api {
         ticketNumber: "MI-119",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "low",
+        priority: 0,
+        status: "In Progress",
         owner: { name: "Doe" },
       },
       {
@@ -158,7 +177,8 @@ export default class Api {
         ticketNumber: "MI-120",
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
-        priority: "high",
+        priority: 2,
+        status: "Testing",
         owner: { name: "Matthew" },
       },
     ];
