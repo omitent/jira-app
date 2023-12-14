@@ -10,12 +10,6 @@ import highSvg from "./icons/high.svg";
 // import AppCover from "home/dashboad/AppCover";
 import AppCover from "./AppCover";
 
-const priorityLabels = {
-  0: "low",
-  1: "medium",
-  2: "high",
-};
-
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
@@ -71,6 +65,7 @@ interface Ticket {
   content: string;
   priority: string;
   ticketNumber: string;
+  status: string;
 }
 
 export default function PunchList() {
@@ -306,43 +301,43 @@ export default function PunchList() {
                                       setSortStatus({
                                         ...sortStatus,
                                         [column.name]: {
-                                          priority: true,
+                                          status: true,
                                         },
                                       });
                                     } else {
                                       if (
-                                        sortStatus[column.name]["priority"] ===
+                                        sortStatus[column.name]["status"] ===
                                         undefined
                                       ) {
                                         setSortStatus({
                                           ...sortStatus,
                                           [column.name]: {
-                                            priority: true,
+                                            status: true,
                                           },
                                         });
                                       } else {
                                         setSortStatus({
                                           ...sortStatus,
                                           [column.name]: {
-                                            priority:
+                                            status:
                                               !sortStatus[column.name][
-                                                "priority"
+                                                "status"
                                               ],
                                           },
                                         });
                                       }
                                     }
-                                    sortByField(column.name, "priority");
+                                    sortByField(column.name, "status");
                                   }}
                                 >
                                   Status
                                   {sortStatus[column.name] &&
-                                    sortStatus[column.name]["priority"] !==
+                                    sortStatus[column.name]["status"] !==
                                       undefined && (
                                       <>
-                                        {sortStatus[column.name]["priority"] ===
+                                        {sortStatus[column.name]["status"] ===
                                           true && <span>&#8593;</span>}
-                                        {sortStatus[column.name]["priority"] ===
+                                        {sortStatus[column.name]["status"] ===
                                           false && <span>&#8595;</span>}
                                       </>
                                     )}
@@ -394,9 +389,7 @@ export default function PunchList() {
                                           </div>
                                           <div className="w-20">
                                             <p className="badge">
-                                              <b>
-                                                {priorityLabels[item.priority]}
-                                              </b>
+                                              <b>{item.status}</b>
                                             </p>
                                           </div>
                                         </div>

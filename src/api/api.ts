@@ -7,6 +7,7 @@ export default class Api {
         content:
           "Cart featureLorem ipsum dolor sit amet, consectetur adipiscing elits.",
         priority: 1,
+        status: "Backlog",
         owner: { name: "John" },
       },
       {
@@ -15,6 +16,7 @@ export default class Api {
         content:
           "Take ownership of the entire software development lifecycle, from concept to deployment.",
         priority: 2,
+        status: "In Progress",
         owner: { name: "Mike" },
       },
       {
@@ -23,6 +25,7 @@ export default class Api {
         content:
           "Design and implement robust, scalable, and efficient AI software architecture tailored to our business needs.",
         priority: 2,
+        status: "Closed",
         owner: { name: "Mike" },
       },
       {
@@ -31,6 +34,7 @@ export default class Api {
         content:
           "Develop user-friendly and responsive frontend interfaces, ensuring a seamless user experience.",
         priority: 0,
+        status: "In Progress",
         owner: { name: "John" },
       },
       {
@@ -39,6 +43,7 @@ export default class Api {
         content:
           "Ability to design and optimize algorithms for efficiency and scalability.",
         priority: 1,
+        status: "Backlog",
         owner: { name: "Doe" },
       },
       {
@@ -47,6 +52,7 @@ export default class Api {
         content:
           "Implement security best practices to safeguard user data and ensure the integrity of the software.",
         priority: 1,
+        status: "Closed",
         owner: { name: "Ashley" },
       },
       {
@@ -55,6 +61,7 @@ export default class Api {
         content:
           "Conduct thorough testing of the software to identify and fix bugs, ensuring a stable and reliable product.",
         priority: 1,
+        status: "In Progress",
         owner: { name: "Matthew" },
       },
       {
@@ -63,6 +70,7 @@ export default class Api {
         content:
           "Strong background in AI and machine learning, with experience in implementing and integrating models into software.",
         priority: 0,
+        status: "Backlog",
         owner: { name: "John" },
       },
       {
@@ -71,6 +79,7 @@ export default class Api {
         content:
           "We pride ourselves in our commitment to providing the highest quality of service, while helping our clients meet their goals.",
         priority: 1,
+        status: "Closed",
         owner: { name: "Ashley" },
       },
       {
@@ -79,6 +88,7 @@ export default class Api {
         content:
           "We are currently seeking a skilled and motivated Full Stack Web Developer to join our team.",
         priority: 0,
+        status: "In Progress",
         owner: { name: "Matthew" },
       },
       {
@@ -87,6 +97,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 2,
+        status: "Testing",
         owner: { name: "Mike" },
       },
       {
@@ -95,6 +106,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 0,
+        status: "In Progress",
         owner: { name: "Doe" },
       },
       {
@@ -103,6 +115,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 1,
+        status: "Backlog",
         owner: { name: "John" },
       },
       {
@@ -111,6 +124,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 2,
+        status: "In Progress",
         owner: { name: "Doe" },
       },
       {
@@ -119,6 +133,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 0,
+        status: "Backlog",
         owner: { name: "Mike" },
       },
       {
@@ -127,6 +142,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 2,
+        status: "Testing",
         owner: { name: "Doe" },
       },
       {
@@ -135,6 +151,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 1,
+        status: "In Progress",
         owner: { name: "Mike" },
       },
       {
@@ -143,6 +160,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 2,
+        status: "In Progress",
         owner: { name: "Ashley" },
       },
       {
@@ -151,6 +169,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 0,
+        status: "In Progress",
         owner: { name: "Doe" },
       },
       {
@@ -159,6 +178,7 @@ export default class Api {
         content:
           "Experience with version control systems, such as Git, for collaborative development.",
         priority: 2,
+        status: "Testing",
         owner: { name: "Matthew" },
       },
     ];
