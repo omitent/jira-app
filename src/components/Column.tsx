@@ -114,7 +114,7 @@ export default function Column(props) {
                       {(provided) => {
                         return (
                           <div
-                            className="p-1 border-bottom d-flex align-items-center"
+                            className="p-1 border-bottom d-flex align-items-center position-sticky"
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -143,6 +143,7 @@ export default function Column(props) {
                     </Draggable>
                   );
                 })}
+                {provided.placeholder}
               </div>
             );
           }}
