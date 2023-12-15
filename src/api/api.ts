@@ -32,7 +32,7 @@ export default class Api {
             content:
               "Experience with version control systems, such as Git, for collaborative development.",
             priority: 2,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "Ashley",
             },
@@ -59,7 +59,7 @@ export default class Api {
             content:
               "Experience with version control systems, such as Git, for collaborative development.",
             priority: 0,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "Doe",
             },
@@ -70,7 +70,7 @@ export default class Api {
             content:
               "Experience with version control systems, such as Git, for collaborative development.",
             priority: 2,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "Doe",
             },
@@ -92,7 +92,7 @@ export default class Api {
             content:
               "Experience with version control systems, such as Git, for collaborative development.",
             priority: 0,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "Doe",
             },
@@ -119,7 +119,7 @@ export default class Api {
             content:
               "Develop user-friendly and responsive frontend interfaces, ensuring a seamless user experience.",
             priority: 0,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "John",
             },
@@ -157,7 +157,7 @@ export default class Api {
             content:
               "Conduct thorough testing of the software to identify and fix bugs, ensuring a stable and reliable product.",
             priority: 1,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "Matthew",
             },
@@ -168,7 +168,7 @@ export default class Api {
             content:
               "We are currently seeking a skilled and motivated Full Stack Web Developer to join our team.",
             priority: 0,
-            status: "In Progress",
+            status: "Progress",
             owner: {
               name: "Matthew",
             },
