@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "gridstack/dist/gridstack.min.css";
+import "gridstack/dist/gridstack-extra.min.css";
+import "gridstack/dist/gridstack-all.js";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

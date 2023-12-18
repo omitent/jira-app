@@ -114,7 +114,7 @@ export default function Column(props) {
                       {(provided) => {
                         return (
                           <div
-                            className="p-1 border-bottom d-flex align-items-center position-sticky"
+                            className="p-1 border-bottom d-flex align-items-center"
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}

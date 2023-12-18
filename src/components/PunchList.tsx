@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
-import ReactGridLayout from "react-grid-layout";
+import { GridStack } from "gridstack";
 
 // import Api from "../../../utils/api";
 import Api from "../api/api";
@@ -66,6 +66,19 @@ interface Ticket {
 }
 
 export default function PunchList() {
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    if (gridRef.current) {
+      GridStack.init({
+        resizable: {
+          handles: "e,se,s,sw,w",
+        },
+        alwaysShowResizeHandle: true,
+      });
+    }
+  }, []);
+
   const [columns, setColumns] = useState<{ name: string; items: Ticket[] }[]>(
     []
   );
@@ -113,20 +126,14 @@ export default function PunchList() {
 
   return (
     <AppCover>
-      <div className="d-flex flex-wrap">
+      <div>
         {Object.entries(columns).length ? (
           <DragDropContext
             onDragEnd={(result) => {
               onDragEnd(result, columns, setColumns);
             }}
           >
-            <ReactGridLayout
-              className="layout"
-              cols={12}
-              rowHeight={50}
-              draggableHandle=".ticket-header"
-              width={window.innerWidth - 100}
-            >
+            <div ref={gridRef} className="grid-stack gs-12 gs-id-12">
               {Object.entries(columns).map(
                 (
                   [columnId, column]: [
@@ -137,14 +144,12 @@ export default function PunchList() {
                 ) => {
                   return (
                     <div
-                      className="d-flex border align-items-center flex-column w-32 m-2"
+                      className="grid-stack-item"
                       key={columnId}
-                      data-grid={{
-                        x: (index * 4) % 12,
-                        y: 0,
-                        w: 4,
-                        h: 9,
-                      }}
+                      gs-x={(index % 3) * 4.0}
+                      gs-y={Math.floor(index / 3) * 4.0}
+                      gs-w={4}
+                      gs-h={4}
                     >
                       <Column
                         key={columnId}
@@ -160,7 +165,7 @@ export default function PunchList() {
                   );
                 }
               )}
-            </ReactGridLayout>
+            </div>
           </DragDropContext>
         ) : (
           <h1>Loading...</h1>
