@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { GridStack } from "gridstack";
 
 import mediumSvg from "./icons/medium.svg";
 import lowSvg from "./icons/low.svg";
@@ -19,9 +20,17 @@ function OrderIcon(props) {
 
 export default function Column(props) {
   const { columnId, column, sortStatus, setSortStatus, sortByField } = props;
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    if (gridRef.current) {
+      GridStack.init();
+    }
+  }, []);
+
   return (
-    <>
-      <div className="bg-light w-100 p-2 ticket-header">
+    <div>
+      <div className="bg-light w-100 p-2 ticket-header" ref={gridRef}>
         <b>{column.name}</b>
       </div>
       <div className="overflow-y-auto overflow-x-hidden">
@@ -149,6 +158,6 @@ export default function Column(props) {
           }}
         </Droppable>
       </div>
-    </>
+    </div>
   );
 }

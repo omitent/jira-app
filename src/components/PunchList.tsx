@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
-import { GridStack } from "gridstack";
 
 // import Api from "../../../utils/api";
 import Api from "../api/api";
@@ -66,19 +65,6 @@ interface Ticket {
 }
 
 export default function PunchList() {
-  const gridRef = useRef(null);
-
-  useEffect(() => {
-    if (gridRef.current) {
-      GridStack.init({
-        resizable: {
-          handles: "e,se,s,sw,w",
-        },
-        alwaysShowResizeHandle: true,
-      });
-    }
-  }, []);
-
   const [columns, setColumns] = useState<{ name: string; items: Ticket[] }[]>(
     []
   );
@@ -133,7 +119,7 @@ export default function PunchList() {
               onDragEnd(result, columns, setColumns);
             }}
           >
-            <div ref={gridRef} className="grid-stack gs-12 gs-id-12">
+            <div className="grid-stack">
               {Object.entries(columns).map(
                 (
                   [columnId, column]: [
