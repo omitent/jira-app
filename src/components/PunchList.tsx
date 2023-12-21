@@ -137,16 +137,18 @@ export default function PunchList() {
                       gs-w={4}
                       gs-h={4}
                     >
-                      <Column
-                        key={columnId}
-                        columnId={columnId}
-                        column={column}
-                        sortStatus={sortStatus}
-                        setSortStatus={(status) => setSortStatus(status)}
-                        sortByField={(columnName, field) =>
-                          sortByField(columnName, field)
-                        }
-                      />
+                      <div className="grid-stack-item-content column-item">
+                        <Column
+                          key={columnId}
+                          columnId={columnId}
+                          column={column}
+                          sortStatus={sortStatus}
+                          setSortStatus={(status) => setSortStatus(status)}
+                          sortByField={(columnName, field) =>
+                            sortByField(columnName, field)
+                          }
+                        />
+                      </div>
                     </div>
                   );
                 }
