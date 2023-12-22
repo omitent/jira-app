@@ -34,8 +34,8 @@ export default function Column(props) {
   }, []);
 
   return (
-    <div>
-      <div className="bg-light w-100 p-2 ticket-header" ref={gridRef}>
+    <div ref={gridRef}>
+      <div className="bg-light w-100 p-2 ticket-header">
         <b>{column.name}</b>
       </div>
       <div className="overflow-y-auto overflow-x-hidden">
