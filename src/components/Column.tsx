@@ -23,8 +23,13 @@ export default function Column(props) {
   const gridRef = useRef(null);
 
   useEffect(() => {
+    var options = {
+      draggable: {
+        handle: ".ticket-header",
+      },
+    };
     if (gridRef.current) {
-      GridStack.init();
+      GridStack.init(options);
     }
   }, []);
 

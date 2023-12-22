@@ -134,8 +134,8 @@ export default function PunchList() {
                       key={columnId}
                       gs-x={(index % 3) * 4.0}
                       gs-y={Math.floor(index / 3) * 4.0}
-                      gs-w={4}
-                      gs-h={4}
+                      gs-min-w={4}
+                      gs-min-h={4}
                     >
                       <div className="grid-stack-item-content column-item">
                         <Column
