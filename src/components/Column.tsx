@@ -23,7 +23,7 @@ export default function Column(props) {
   const gridRef = useRef(null);
 
   useEffect(() => {
-    var options = {
+    const options = {
       draggable: {
         handle: ".ticket-header",
       },
